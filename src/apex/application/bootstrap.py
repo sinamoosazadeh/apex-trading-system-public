@@ -73,10 +73,8 @@ class CryptoApplication:
         self.last_processed_ts: Dict[str, Dict[str, float]] = defaultdict(lambda: defaultdict(float))
         self.smt_state = SMTState()
         
-        # WebSocket
-        self.ws_client = None
-        if api_key and api_secret:
-            self.ws_client = ToobitWebSocketClient(api_key, api_secret, self.event_bus)
+        # WebSocket - correct signature per toobit_ws.py: (event_bus, symbols)
+        self.ws_client = ToobitWebSocketClient(event_bus=self.event_bus, symbols=self.symbols)
         
         # Telegram Bot (optional)
         self.telegram_bot = None

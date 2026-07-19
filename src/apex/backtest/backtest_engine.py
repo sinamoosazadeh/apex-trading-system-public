@@ -98,9 +98,13 @@ class InstitutionalBacktestEngine:
     """Full History Backtest - Per Blueprints Institutional"""
     
     def __init__(self):
-        from ..features.feature_store import FeatureStore
-        self.feature_store = FeatureStore()
-        self.primitive = PrimitiveFeatures(store=self.feature_store)
+        try:
+            from ..features.feature_store import FeatureStore
+            self.feature_store = FeatureStore()
+            self.primitive = PrimitiveFeatures(store=self.feature_store)
+        except TypeError:
+            self.primitive = PrimitiveFeatures()
+            self.feature_store = None
         self.regime_engine = RegimeEngine()
         self.ict_engine = ICTEngine()
         self.evidence_engine = EvidenceEngine()
