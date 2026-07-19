@@ -1,7 +1,9 @@
-"""Secure Config Manager - Crypto-Only - Fixed isinstance"""
+
+"""Secure Config Manager - Returns contracts.ExchangeCredentials"""
 from __future__ import annotations
 import os
-from .vault import Vault, ExchangeCredentials
+from .vault import Vault
+from .contracts import ExchangeCredentials
 
 class SecureConfigManager:
     def __init__(self, vault: Vault):
@@ -17,6 +19,5 @@ class SecureConfigManager:
         self._config["credentials"] = self.vault.load_exchange_credentials("toobit", api_key, api_secret)
     def get(self, key: str):
         return self._config.get(key)
-
-# Re-export for isinstance checks
-ExchangeCredentials = ExchangeCredentials
+    def secure_boot_check(self) -> bool:
+        return "exchange" in self._config and "credentials" in self._config
