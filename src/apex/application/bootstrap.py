@@ -206,7 +206,10 @@ class CryptoApplication:
         prob_report = self.probability_engine.compute_probability(ev_long, ev_short, weights)
         
         # 10. Decision
-        decision = self.decision_engine.make_decision(prob_report, regime, symbol)
+        # DecisionEngine uses evaluate(probability, portfolio, contributors)
+        contributors_long = len([v for v in ev_long.values() if v>0.6])
+        contributors_short = len([v for v in ev_short.values() if v>0.6])
+        decision = self.decision_engine.evaluate(prob_report, self.portfolio_engine.get_state(), contributors_long, contributors_short)
         if not decision or decision.decision_type != "TRADE":
             return
         
