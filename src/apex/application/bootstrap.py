@@ -17,7 +17,8 @@ from typing import Dict, List
 from ..core.events import EventBus, Event
 from ..core.types.enums import EventType
 from ..core.config import ApexConfigLoader
-from ..security.vault import SecureBootstrapLoader
+# SecureBootstrapLoader removed for compat - using Vault directly
+# from ..security.vault import SecureBootstrapLoader
 from ..domain.market import MarketBar
 from ..domain.knowledge import Experience
 from ..infrastructure.exchanges.toobit_ws import ToobitWebSocketClient

@@ -119,3 +119,22 @@ class SecureConfigManager:
         self._config["exchange"] = "toobit"
         self._config["symbols"] = os.getenv("APEX_SYMBOLS", "BTC-SWAP-USDT").split(",")
         self._config["credentials"] = self.vault.load_exchange_credentials("toobit", api_key, api_secret)
+
+
+class SecureBootstrapLoader:
+    """Loader for bootstrap that provides secure credentials - compat"""
+    def __init__(self, vault: Vault = None):
+        self.vault = vault or Vault()
+    
+    def load(self):
+        import os
+        key = os.getenv("TOOBIT_API_KEY", "test_key")
+        secret = os.getenv("TOOBIT_API_SECRET", "test_secret")
+        return self.vault.load_exchange_credentials("toobit", key, secret)
+    
+    def inject_toobit_adapter(self):
+        from ..infrastructure.exchanges.toobit_adapter import ToobitAdapter
+        import os
+        key = os.getenv("TOOBIT_API_KEY", "test_key")
+        secret = os.getenv("TOOBIT_API_SECRET", "test_secret")
+        return ToobitAdapter(key, secret)
