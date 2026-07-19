@@ -51,9 +51,10 @@ class CryptoApplication:
         self.metrics = MetricsEngine()
         self.health = HealthMonitor()
         self.vault = Vault(master_password=os.getenv("APEX_MASTER", "default"))
+        self.feature_store = FeatureStore()
         
         # Feature Engines
-        self.primitive_features = PrimitiveFeatures()
+        self.primitive_features = PrimitiveFeatures(store=self.feature_store)
         self.regime_engine = RegimeEngine()
         self.ict_engine = ICTEngine()
         self.evidence_engine = EvidenceEngine()
