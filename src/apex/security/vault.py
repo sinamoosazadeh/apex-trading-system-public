@@ -159,3 +159,18 @@ class SecureConfigManager:
         self._config["credentials"] = self.vault.load_exchange_credentials("toobit", api_key, api_secret)
     def get(self, key: str):
         return self._config.get(key)
+
+
+# Patch: Make ExchangeCredentials available in secure_config module for isinstance checks
+try:
+    import sys
+    # Create a fake module entry if secure_config exists
+    if 'apex.security.secure_config' in sys.modules:
+        sys.modules['apex.security.secure_config'].ExchangeCredentials = ExchangeCredentials
+    # Also ensure it is importable
+    import apex.security.secure_config as _sc
+    _sc.ExchangeCredentials = ExchangeCredentials
+except Exception as e:
+    pass
+
+# Ensure SecureConfigManager uses same class
