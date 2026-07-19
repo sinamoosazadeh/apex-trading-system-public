@@ -95,7 +95,12 @@ class Vault:
     VAULT_FILE = ".apex_vault.enc"
     KEY_FILE = ".apex_vault.key"
     AUDIT_FILE = ".apex_vault.audit.jsonl"
-    def __init__(self, root_dir: Optional[Path] = None, master_key: Optional[str] = None):
+    def __init__(self, root_dir: Optional[Path] = None, master_key: Optional[str] = None, master_password: Optional[str] = None, **kwargs):
+        if master_password is not None and master_key is None:
+            master_key = master_password
+        # also handle kwargs for backward compat
+        if 'password' in kwargs and master_key is None:
+            master_key = kwargs['password']
         self.root_dir = Path(root_dir) if root_dir else Path.cwd()
         self._lock = threading.RLock()
         self._cache: Dict[str, SecureCredential] = {}
