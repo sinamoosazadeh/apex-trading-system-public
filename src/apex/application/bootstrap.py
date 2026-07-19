@@ -211,3 +211,11 @@ class CryptoApplication:
 
 # For backward compatibility with tests
 Application = CryptoApplication
+
+try:
+    from ..optimization.integration import integrate_optimization_system
+    integrate_optimization_system(self)
+except Exception as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Optimization integration skipped: {e}")
+
