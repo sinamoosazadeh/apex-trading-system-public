@@ -233,3 +233,21 @@ try:
 except Exception:
     pass
 
+# Telegram Enterprise Control Center - Safe Integration
+try:
+    from..telegram.integration import integrate_telegram_system as _integrate_tg
+    _orig_init2 = CryptoApplication.__init__
+    def _patched_init2(self, *args, **kwargs):
+        _orig_init2(self, *args, **kwargs)
+        try:
+            # Get owner/admin from env or config
+            import os
+            owner_ids = [int(x) for x in os.getenv("TELEGRAM_OWNER_IDS","").split(",") if x.strip().isdigit()]
+            admin_ids = [int(x) for x in os.getenv("TELEGRAM_ADMIN_IDS","").split(",") if x.strip().isdigit()]
+            _integrate_tg(self, owner_ids=owner_ids, admin_ids=admin_ids)
+        except Exception:
+            pass
+    CryptoApplication.__init__ = _patched_init2
+except Exception:
+    pass
+
