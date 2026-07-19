@@ -219,3 +219,17 @@ except Exception as e:
     import logging
     logging.getLogger(__name__).warning(f"Optimization integration skipped: {e}")
 
+# Optimization Subsystem - Safe Integration (Non-breaking Adapter)
+try:
+    from ..optimization.integration import integrate_optimization_system as _integrate_opt
+    _orig_bootstrap_init = CryptoApplication.__init__
+    def _patched_init(self, *args, **kwargs):
+        _orig_bootstrap_init(self, *args, **kwargs)
+        try:
+            _integrate_opt(self)
+        except Exception:
+            pass
+    CryptoApplication.__init__ = _patched_init
+except Exception:
+    pass
+
