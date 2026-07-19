@@ -36,6 +36,7 @@ from ..monitoring.metrics_engine import MetricsEngine
 from ..monitoring.health_monitor import HealthMonitor
 from ..backtest.backtest_engine import InstitutionalBacktestEngine, TOP_10_SYMBOLS, ALL_14_TFS
 from ..security.vault import Vault
+from ..backtest.telegram_menu import handle_backtest_callback, BOT_MENU
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 log = StructuredLogger("APEX.Crypto")
