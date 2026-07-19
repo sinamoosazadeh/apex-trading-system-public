@@ -1,102 +1,59 @@
-"""Order Flow Intelligence Engine."""
+
+"""Institutional Order Flow Intelligence - CVD, Delta, Absorption per Book I 5.20"""
 from __future__ import annotations
-
+from dataclasses import dataclass
+from typing import List, Tuple
 import math
-from collections import deque
-from typing import Dict, Deque
 
-from ..domain.market import Tick, OrderBook
-from ..domain.flow import OrderFlowState
-from .indicators import clamp
+@dataclass(frozen=True)
+class OrderFlowSignal:
+    delta: float
+    cum_delta: float
+    absorption_score: float
+    stacked_imbalance: float
+    confidence: float
 
-class OrderFlowEngine:
-    """Processes live ticks and order book updates for flow analysis."""
-
-    def __init__(self, symbol: str, delta_window: int = 50, avg_vol_window: int = 100) -> None:
-        self.symbol = symbol
-        self.delta_window = delta_window
-        self.avg_vol_window = avg_vol_window
-        
-        self._ticks: Deque[Tick] = deque(maxlen=delta_window)
-        self._volumes: Deque[float] = deque(maxlen=avg_vol_window)
-        self._cumulative_delta: float = 0.0
-        self._last_book: OrderBook | None = None
-        self._last_price: float = 0.0
-
-    def process_tick(self, tick: Tick) -> None:
-        """Process a new tick and update flow metrics."""
-        self._ticks.append(tick)
-        self._volumes.append(tick.volume)
-        
-        if tick.side == 'buy':
-            self._cumulative_delta += tick.volume
+def calculate_cvd(volumes: List[float], closes: List[float], opens: List[float]) -> Tuple[float,float]:
+    """Cumulative Volume Delta - simplified from Pine roll_delta, cum_delta_bias"""
+    if len(volumes) < 2:
+        return 0.0, 0.0
+    deltas = []
+    for i in range(1, len(volumes)):
+        if closes[i] > opens[i]:
+            deltas.append(volumes[i])
+        elif closes[i] < opens[i]:
+            deltas.append(-volumes[i])
         else:
-            self._cumulative_delta -= tick.volume
-            
-        self._last_price = tick.price
+            deltas.append(0.0)
+    roll_delta = sum(deltas[-20:]) if len(deltas)>=20 else sum(deltas)
+    cum_delta = sum(deltas)
+    return roll_delta, cum_delta
 
-    def process_orderbook(self, book: OrderBook) -> None:
-        """Process a new order book snapshot."""
-        self._last_book = book
+def detect_absorption(bars_high: List[float], bars_low: List[float], bars_vol: List[float], delta: float) -> float:
+    """Absorption: high volume but small price movement"""
+    if len(bars_high) < 5:
+        return 0.0
+    range_last = bars_high[-1] - bars_low[-1]
+    avg_range = sum(h-l for h,l in zip(bars_high[-10:], bars_low[-10:]))/10 if len(bars_high)>=10 else range_last+1e-9
+    vol_last = bars_vol[-1]
+    avg_vol = sum(bars_vol[-10:])/10 if len(bars_vol)>=10 else vol_last+1e-9
+    if avg_range == 0 or avg_vol == 0:
+        return 0.0
+    # High vol + low range = absorption
+    vol_ratio = vol_last / avg_vol
+    range_ratio = range_last / avg_range
+    if vol_ratio > 1.5 and range_ratio < 0.7:
+        return min(1.0, (vol_ratio-1.5)*range_ratio)
+    return 0.0
 
-    def get_state(self) -> OrderFlowState:
-        """Calculate and return the current order flow state."""
-        if not self._ticks:
-            return OrderFlowState(timestamp=0.0, symbol=self.symbol)
+def order_flow_engine(
+    highs: List[float], lows: List[float], closes: List[float], opens: List[float], volumes: List[float]
+) -> OrderFlowSignal:
+    roll_delta, cum_delta = calculate_cvd(volumes, closes, opens)
+    absorption = detect_absorption(highs, lows, volumes, roll_delta)
+    # Stacked imbalance: consecutive delta same direction
+    _, cum = calculate_cvd(volumes, closes, opens)
+    stacked = 1.0 if abs(roll_delta) > abs(cum)*0.3 else 0.0
+    confidence = min(1.0, (abs(roll_delta)/(sum(volumes[-20:])+1e-9))*5)
+    return OrderFlowSignal(delta=roll_delta, cum_delta=cum, absorption_score=absorption, stacked_imbalance=stacked, confidence=confidence)
 
-        # 1. Trade Flow Metrics
-        buy_vol = sum(t.volume for t in self._ticks if t.side == 'buy')
-        sell_vol = sum(t.volume for t in self._ticks if t.side == 'sell')
-        total_vol = buy_vol + sell_vol
-        
-        delta = buy_vol - sell_vol
-        aggression_ratio = delta / total_vol if total_vol > 0 else 0.0
-
-        # 2. Order Book Metrics (Fallback to 0 if book not available yet)
-        book_imbalance = 0.0
-        micro_price = 0.0
-        spread_bps = 0.0
-        
-        if self._last_book:
-            bid_vol = self._last_book.bid_volume
-            ask_vol = self._last_book.ask_volume
-            total_book_vol = bid_vol + ask_vol
-            
-            book_imbalance = (bid_vol - ask_vol) / total_book_vol if total_book_vol > 0 else 0.0
-            
-            bb = self._last_book.best_bid
-            ba = self._last_book.best_ask
-            micro_price = (bb * ask_vol + ba * bid_vol) / total_book_vol if total_book_vol > 0 else (bb + ba) / 2.0
-            spread_bps = self._last_book.spread_bps
-
-        # 3. Absorption & Exhaustion Detection
-        avg_vol = sum(self._volumes) / len(self._volumes) if self._volumes else 1.0
-        current_vol = self._ticks[-1].volume if self._ticks else 0.0
-        vol_spike = current_vol > (avg_vol * 2.0) if avg_vol > 0 else False
-        
-        price_change = 0.0
-        if len(self._ticks) >= 2:
-            price_change = abs(self._ticks[-1].price - self._ticks[-2].price)
-            
-        absorption_score = 0.0
-        if vol_spike and current_vol > 0:
-            expected_move = current_vol / max(avg_vol, 1.0) * 0.01
-            if price_change < expected_move:
-                absorption_score = clamp(1.0 - (price_change / max(expected_move, 0.0001)), 0.0, 1.0)
-
-        exhaustion_score = clamp(absorption_score * 0.8, 0.0, 1.0)
-
-        return OrderFlowState(
-            timestamp=self._ticks[-1].timestamp if self._ticks else 0.0,
-            symbol=self.symbol,
-            delta=delta,
-            cumulative_delta=self._cumulative_delta,
-            buy_volume=buy_vol,
-            sell_volume=sell_vol,
-            aggression_ratio=clamp(aggression_ratio, -1.0, 1.0),
-            book_imbalance=clamp(book_imbalance, -1.0, 1.0),
-            micro_price=micro_price,
-            spread_bps=spread_bps,
-            absorption_score=absorption_score,
-            exhaustion_score=exhaustion_score
-        )
