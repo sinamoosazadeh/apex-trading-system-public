@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+optimization_artifacts/
+apex_test_*
+apex_tmp_opt
