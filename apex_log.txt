@@ -1,0 +1,158 @@
+{"timestamp": 1784306110.5489206, "level": "INFO", "module": "APEX.Application", "message": "Initializing Institutional APEX Trading System...", "trace_id": ""}
+{"timestamp": 1784306110.5494525, "level": "INFO", "module": "APEX.Application", "message": "Waiting for WebSocket data to warm up (requires ~50 minutes for 50 bars)...", "trace_id": ""}
+{"timestamp": 1784306110.5505667, "level": "INFO", "module": "APEX.Application", "message": "APEX System is LIVE and listening to markets.", "trace_id": ""}
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+{"timestamp": 1784306113.082466, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 1/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306159.9932625, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 2/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306220.0460439, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 3/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306280.0966344, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 4/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306339.8419583, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 5/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306399.8937147, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 6/20 bars collected.", "trace_id": ""}
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+{"timestamp": 1784306459.909364, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 7/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306519.991331, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 8/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306580.064968, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 9/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306639.833833, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 10/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306699.8714178, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 11/20 bars collected.", "trace_id": ""}
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-3448' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+{"timestamp": 1784306759.9297268, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 12/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306819.997106, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 13/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306879.8138306, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 14/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306939.8861184, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 15/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784306999.951961, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 16/20 bars collected.", "trace_id": ""}
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-6992' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+{"timestamp": 1784308986.6941428, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 17/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784309039.8697846, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 18/20 bars collected.", "trace_id": ""}
+{"timestamp": 1784309100.0584886, "level": "INFO", "module": "APEX.Application", "message": "Collecting data for BTC-SWAP-USDT: 19/20 bars collected.", "trace_id": ""}
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-13265' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-14900' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-19703' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-21050' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-24422' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-26977' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Toobit WS disconnected: no close frame received or sent. Reconnecting in 1.0s
+Connecting to Toobit WebSocket: wss://stream.toobit.com/quote/ws/v1
+Subscribed to trades and 1m klines for ['BTC-SWAP-USDT']
+Task exception was never retrieved
+future: <Task finished name='Task-30519' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+{"timestamp": 1784310663.1428266, "level": "INFO", "module": "APEX.Application", "message": "Shutdown signal received...", "trace_id": ""}
+Task exception was never retrieved
+future: <Task finished name='Task-38412' coro=<Application.shutdown() done, defined at /data/data/com.termux/files/home/apex/src/apex/application/bootstrap.py:223> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/application/bootstrap.py", line 229, in shutdown
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 64, in disconnect
+    if self._ws and not self._ws.closed:
+                        ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/main.py", line 6, in <module>
+    main()
+    ~~~~^^
+  File "/data/data/com.termux/files/home/apex/src/apex/application/cli.py", line 32, in main
+    asyncio.run(app.run())
+    ~~~~~~~~~~~^^^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/apex/src/apex/application/bootstrap.py", line 221, in run
+TypeError: 'bool' object can't be awaited
+Task exception was never retrieved
+future: <Task finished name='Task-38016' coro=<ToobitWebSocketClient._heartbeat_loop() done, defined at /data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py:86> exception=AttributeError("'ClientConnection' object has no attribute 'closed'")>
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/apex/src/apex/infrastructure/exchanges/toobit_ws.py", line 88, in _heartbeat_loop
+    while self._running and self._ws and not self._ws.closed:
+                                             ^^^^^^^^^^^^^^^
+AttributeError: 'ClientConnection' object has no attribute 'closed'. Did you mean: 'close'?
