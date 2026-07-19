@@ -57,3 +57,27 @@ def order_flow_engine(
     confidence = min(1.0, (abs(roll_delta)/(sum(volumes[-20:])+1e-9))*5)
     return OrderFlowSignal(delta=roll_delta, cum_delta=cum, absorption_score=absorption, stacked_imbalance=stacked, confidence=confidence)
 
+
+# --- Compatibility layer for existing tests ---
+class OrderFlowEngine:
+    """Wrapper for backward compat with tests"""
+    def __init__(self):
+        pass
+    
+    def calculate_delta(self, volumes, closes, opens):
+        roll, cum = calculate_cvd(volumes, closes, opens)
+        return roll
+    
+    def calculate_cvd(self, volumes, closes, opens):
+        return calculate_cvd(volumes, closes, opens)
+    
+    def detect_absorption(self, highs, lows, vols, delta):
+        return detect_absorption(highs, lows, vols, delta)
+    
+    def analyze(self, highs, lows, closes, opens, volumes):
+        return order_flow_engine(highs, lows, closes, opens, volumes)
+
+# Also for test: book imbalance
+def calculate_book_imbalance(bid_vol, ask_vol):
+    total = bid_vol + ask_vol + 1e-9
+    return (bid_vol - ask_vol) / total
